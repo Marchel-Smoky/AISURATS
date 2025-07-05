@@ -59,10 +59,11 @@ async function handleSubmit(e) {
   const data = {};
   inputs.forEach(input => data[input.id] = input.value);
 
-  document.getElementById("loading").classList.remove("hidden");
-  document.getElementById("hasilContainer").classList.add("hidden");
+  document.getElementById("hasilContainer").classList.remove("hidden");
+  document.getElementById("loading").classList.add("hidden");
 
   if (mode === "ai") {
+    document.getElementById("cariBaruBtn").classList.remove("hidden");
     try {
       const res = await fetch("https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/generate", {
         method: "POST",
@@ -147,6 +148,9 @@ function unduhWord() {
 }
 
 document.getElementById("nextBtn").addEventListener("click", async () => {
+  const mode = document.getElementById("modeSurat").value;
+  if (mode === "ai") return; // Jangan lanjut jika mode AI
+
   if (currentId < maxId) {
     currentId++;
     await tampilkanSuratDenganId(currentId);
@@ -154,8 +158,19 @@ document.getElementById("nextBtn").addEventListener("click", async () => {
 });
 
 document.getElementById("prevBtn").addEventListener("click", async () => {
+  const mode = document.getElementById("modeSurat").value;
+  if (mode === "ai") return; // Jangan lanjut jika mode AI
+
   if (currentId > 1) {
     currentId--;
     await tampilkanSuratDenganId(currentId);
   }
 });
+function resetForm() {
+  document.getElementById("formSurat").reset();
+  document.getElementById("inputTambahan").innerHTML = "";
+  document.getElementById("hasilContainer").classList.add("hidden");
+  document.getElementById("hasilSurat").innerText = "";
+  document.getElementById("cariBaruBtn").classList.add("hidden");
+}
+
