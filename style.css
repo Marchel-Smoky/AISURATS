@@ -1,18 +1,31 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #2c3e50;
+  --card-bg: #ffffff;
+  --input-bg: #f9f9f9;
+  --button-bg: #1abc9c;
+  --button-hover: #16a085;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to right, #e0f7fa, #e0f2f1);
+  color: var(--text-color);
   padding: 30px;
   margin: 0;
 }
 
 .container {
-  background: #ffffff;
+  background: var(--card-bg);
   max-width: 700px;
   margin: auto;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  @keyframes fadeInUp {
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+@keyframes fadeInUp {
   0% {
     opacity: 0;
     transform: translateY(30px);
@@ -22,12 +35,6 @@ body {
     transform: translateY(0);
   }
 }
-
-.container {
-  animation: fadeInUp 0.6s ease-out both;
-}
-}
-
 
 h1 {
   text-align: center;
@@ -51,13 +58,15 @@ textarea {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  background: var(--input-bg);
+  color: var(--text-color);
   box-sizing: border-box;
 }
 
 button {
   margin-top: 20px;
   padding: 12px 20px;
-  background: #1abc9c;
+  background: var(--button-bg);
   color: white;
   border: none;
   border-radius: 8px;
@@ -67,119 +76,13 @@ button {
 }
 
 button:hover {
-  background: #16a085;
-}
-
-#loading {
-  text-align: center;
-  font-style: italic;
-  color: #999;
-  margin-top: 20px;
-}
-
-#hasilContainer {
-  margin-top: 30px;
-}
-
-#hasilSurat {
-  width: 100%;
-  min-height: 300px;
-  max-height: 500px; /* Atur sesuai kebutuhan */
-  padding: 15px;
-  font-size: 1rem;
-  line-height: 1.6;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-top: 1rem;
-  font-family: Arial, sans-serif;
-  background: #fff;
-  white-space: pre-wrap;
-  overflow-y: auto; /* Ini yang bikin bisa scroll */
-}
-
-
-#hasilContainer h2 {
-  margin-top: 20px;
-  color: #2c3e50;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.hidden {
-  display: none;
+  background: var(--button-hover);
 }
 
 button + button {
   margin-left: 10px;
 }
 
-#prevBtn,
-#nextBtn {
-  background: #3498db;
-}
-
-#prevBtn:hover,
-#nextBtn:hover {
-  background: #2980b9;
-}
-
-@media (max-width: 600px) {
-  .container {
-    padding: 20px;
-  }
-
-  #hasilSurat {
-    height: 300px;
-  }
-
-  button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  button + button {
-    margin-left: 0;
-  }
-}
-@media (max-width: 600px) {
-  #hasilSurat {
-    max-height: 300px;
-    font-size: 0.95rem;
-  }
-}
-:root {
-  --bg-color: #ffffff;
-  --text-color: #2c3e50;
-  --card-bg: #ffffff;
-  --input-bg: #f9f9f9;
-  --button-bg: #1abc9c;
-  --button-hover: #16a085;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #121212;
-    --text-color: #eeeeee;
-    --card-bg: #1e1e1e;
-    --input-bg: #2c2c2c;
-    --button-bg: #26a69a;
-    --button-hover: #1de9b6;
-  }
-}
-
-body {
-  background: var(--bg-color);
-  color: var(--text-color);
-}
-.container {
-  background: var(--card-bg);
-}
-input,
-select,
-textarea {
-  background: var(--input-bg);
-  color: var(--text-color);
-}
 button.ripple {
   position: relative;
   overflow: hidden;
@@ -202,3 +105,71 @@ button.ripple::after {
   }
 }
 
+#loading {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+  margin-top: 20px;
+}
+
+#hasilContainer {
+  margin-top: 30px;
+}
+
+#hasilSurat {
+  width: 100%;
+  min-height: 300px;
+  max-height: 500px;
+  padding: 15px;
+  font-size: 1rem;
+  line-height: 1.6;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  color: var(--text-color);
+}
+
+#hasilContainer h2 {
+  margin-top: 20px;
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+#prevBtn,
+#nextBtn {
+  background: #3498db;
+}
+
+#prevBtn:hover,
+#nextBtn:hover {
+  background: #2980b9;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  #hasilSurat {
+    max-height: 300px;
+    font-size: 0.95rem;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button + button {
+    margin-left: 0;
+  }
+}
