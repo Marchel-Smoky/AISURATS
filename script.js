@@ -101,7 +101,16 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const element = document.getElementById("hasilSurat");
+  const isi = document.getElementById("hasilSurat").value;
+
+  const element = document.createElement("div");
+  element.style.padding = "20px";
+  element.style.fontFamily = "Arial";
+  element.style.whiteSpace = "pre-wrap";
+  element.innerText = isi;
+
+  document.body.appendChild(element); // ⬅️ Tambahkan sementara ke DOM
+
   const opt = {
     margin: 0.5,
     filename: "surat.pdf",
@@ -109,20 +118,32 @@ function unduhPDF() {
     html2canvas: { scale: 2 },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
-  html2pdf().set(opt).from(element).save();
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    document.body.removeChild(element); // ⬅️ Hapus setelah PDF selesai
+  });
 }
 
+
 function unduhWord() {
-  const isiSurat = document.getElementById("hasilSurat").innerText;
-  const blob = new Blob([
-    `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Surat</title></head><body><pre>${isiSurat}</pre></body></html>`
-  ], {
+  const isi = document.getElementById("hasilSurat").value;
+
+  const htmlContent = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head><meta charset='utf-8'><title>Surat</title></head>
+    <body><pre style="font-family:Arial; font-size:14px;">${isi}</pre></body>
+    </html>`;
+
+  const blob = new Blob([htmlContent], {
     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   });
+
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
   link.download = "surat.doc";
+  document.body.appendChild(link);
   link.click();
+  document.body.removeChild(link);
 }
 
 document.getElementById("nextBtn").addEventListener("click", () => {
