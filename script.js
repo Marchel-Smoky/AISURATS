@@ -110,7 +110,7 @@ document.getElementById("formSurat").addEventListener("submit", async function (
     // === MODE GPT AI ===
     // === MODE GPT AI ===
 try {
-  const res = await fetch("https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/", {
+  const res = await fetch("https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/generate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ jenisSurat: jenis, kualitas, data })
