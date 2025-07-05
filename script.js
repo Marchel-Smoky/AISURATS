@@ -1,4 +1,5 @@
 document.getElementById("jenisSurat").addEventListener("change", tampilkanInput);
+document.getElementById("formSurat").addEventListener("submit", handleSubmit);
 
 function tampilkanInput() {
   const jenis = this.value;
@@ -9,12 +10,13 @@ function tampilkanInput() {
     container.innerHTML += `<label>${label}</label><input type="text" id="${id}" required />`;
   };
 
+  // === Tambahkan input sesuai jenis surat ===
   if (jenis === "izin") {
     buatInput("Nama", "nama");
     buatInput("Tanggal", "tanggal");
     buatInput("Alasan", "alasan");
     buatInput("Ditujukan Kepada (HRD, Guru, Dll)", "kepada");
-    buatInput("Nama (Instansi, Sekolah, Perusahaan)", "instansi");
+    buatInput("Nama Instansi", "instansi");
   } else if (jenis === "lamaran") {
     buatInput("Nama Lengkap", "nama");
     buatInput("Posisi yang Dilamar", "posisi");
@@ -24,7 +26,7 @@ function tampilkanInput() {
     buatInput("Nomor Telepon", "telepon");
   } else if (jenis === "pengunduran") {
     buatInput("Nama", "nama");
-    buatInput("Jabatan Saat Ini", "jabatan");
+    buatInput("Jabatan", "jabatan");
     buatInput("Tanggal Pengunduran Diri", "tanggal");
     buatInput("Nama Atasan / HRD", "kepada");
     buatInput("Alasan Pengunduran Diri", "alasan");
@@ -44,11 +46,12 @@ function tampilkanInput() {
   }
 }
 
-document.getElementById("formSurat").addEventListener("submit", async function (e) {
+async function handleSubmit(e) {
   e.preventDefault();
   const mode = document.getElementById("modeSurat").value;
   const jenis = document.getElementById("jenisSurat").value;
   const kualitas = document.getElementById("kualitas").value;
+
   const inputs = document.querySelectorAll("#inputTambahan input");
   const data = {};
   inputs.forEach(input => data[input.id] = input.value);
@@ -56,22 +59,36 @@ document.getElementById("formSurat").addEventListener("submit", async function (
   document.getElementById("loading").classList.remove("hidden");
   document.getElementById("hasilContainer").classList.add("hidden");
 
-  try {
-    const res = await fetch("https://your-backend-url/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ jenisSurat: jenis, kualitas, data })
-    });
+  if (mode === "ai") {
+    // === MODE AI ===
+    try {
+      const res = await fetch("https://your-backend-url/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jenisSurat: jenis, kualitas, data })
+      });
 
-    const result = await res.json();
-    document.getElementById("hasilSurat").innerText = result.hasil;
-    document.getElementById("hasilContainer").classList.remove("hidden");
-  } catch (err) {
-    alert("Gagal membuat surat dari AI: " + err.message);
-  } finally {
-    document.getElementById("loading").classList.add("hidden");
+      const result = await res.json();
+      document.getElementById("hasilSurat").innerText = result.hasil;
+    } catch (err) {
+      alert("Gagal membuat surat dari AI: " + err.message);
+    }
+  } else {
+    // === MODE MANUAL - Ambil template dari backend dan isi otomatis ===
+    try {
+      const res = await fetch(`http://localhost:3500/api/surat/${jenis}`);
+      const templates = await res.json();
+      const templateAcak = templates[Math.floor(Math.random() * templates.length)].isi;
+      const hasilIsi = templateAcak.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
+      document.getElementById("hasilSurat").innerText = hasilIsi;
+    } catch (err) {
+      alert("Gagal mengambil template surat: " + err.message);
+    }
   }
-});
+
+  document.getElementById("hasilContainer").classList.remove("hidden");
+  document.getElementById("loading").classList.add("hidden");
+}
 
 function unduhPDF() {
   const element = document.getElementById("hasilSurat");
