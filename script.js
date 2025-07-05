@@ -101,15 +101,7 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const isi = document.getElementById("hasilSurat").innerText;
-
-  const element = document.createElement("div");
-  element.style.padding = "20px";
-  element.style.fontFamily = "Arial";
-  element.style.whiteSpace = "pre-wrap";
-  element.innerText = isi;
-
-  document.body.appendChild(element);
+  const element = document.getElementById("hasilSurat");
 
   const opt = {
     margin: 0.5,
@@ -119,9 +111,7 @@ function unduhPDF() {
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().set(opt).from(element).save().then(() => {
-    document.body.removeChild(element);
-  });
+  html2pdf().set(opt).from(element).save();
 }
 
 function unduhWord() {
