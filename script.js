@@ -94,7 +94,7 @@ async function tampilkanSuratDenganId(id) {
     const template = await res.json();
 
     const hasilIsi = template.isi.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
-    document.getElementById("hasilSurat").innerText = hasilIsi;
+    document.getElementById("hasilSurat").value = hasilIsi;
   } catch (err) {
     document.getElementById("hasilSurat").innerText = `❌ Gagal menampilkan surat ke-${id}`;
   }
