@@ -101,35 +101,37 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const original = document.getElementById("hasilSurat");
+  const isi = document.getElementById("hasilSurat").innerHTML;
 
-  // Buat salinan isi dan tampilkan secara visual (diperlukan untuk html2canvas)
-  const clone = document.createElement("div");
-  clone.innerHTML = original.innerHTML;
-  clone.style.position = "fixed";
-  clone.style.top = "-9999px"; // Render di luar layar
-  clone.style.left = "0";
-  clone.style.width = "210mm"; // Lebar A4
-  clone.style.padding = "20px";
-  clone.style.fontFamily = "Arial";
-  clone.style.fontSize = "14px";
-  clone.style.lineHeight = "1.6";
-  clone.style.color = "#000";
-  clone.style.backgroundColor = "#fff";
-  clone.style.whiteSpace = "pre-wrap";
-
-  document.body.appendChild(clone);
-
-  const opt = {
-    margin: 0,
-    filename: "surat.pdf",
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-  };
-
-  html2pdf().set(opt).from(clone).save().then(() => {
-    document.body.removeChild(clone); // Bersihkan setelah selesai
-  });
+  const printWindow = window.open('', '_blank');
+  printWindow.document.open();
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Surat</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            color: #000;
+            white-space: pre-wrap;
+          }
+        </style>
+      </head>
+      <body>
+        ${isi}
+        <script>
+          window.onload = function () {
+            window.print();
+            window.onafterprint = function () {
+              window.close();
+            };
+          };
+        </script>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
 }
 
 function unduhWord() {
