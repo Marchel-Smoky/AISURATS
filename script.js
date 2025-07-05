@@ -101,32 +101,30 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const hasilDiv = document.getElementById("hasilSurat");
+  const isiHTML = document.getElementById("hasilSurat").innerHTML;
 
-  // Buat salinan isi sebagai elemen baru
-  const isiHTML = hasilDiv.innerHTML;
-  const clone = document.createElement("div");
-  clone.innerHTML = isiHTML;
-  clone.style.padding = "20px";
-  clone.style.fontFamily = "Arial";
-  clone.style.fontSize = "14px";
-  clone.style.color = "#000";
-  clone.style.backgroundColor = "#fff";
-  clone.style.whiteSpace = "pre-wrap";
+  // Bungkus dengan dokumen lengkap agar html2pdf bisa baca sempurna
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = `
+    <div style="padding: 20px; font-family: Arial; font-size: 14px; color: #000; background: #fff; white-space: pre-wrap;">
+      ${isiHTML}
+    </div>
+  `;
 
-  document.body.appendChild(clone); // Masukkan sementara ke DOM
+  document.body.appendChild(wrapper); // Tambah ke DOM sementara
 
   const opt = {
     margin: 0.5,
     filename: "surat.pdf",
-    html2canvas: { scale: 2, useCORS: true },
+    html2canvas: { scale: 2 },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().set(opt).from(clone).save().then(() => {
-    document.body.removeChild(clone); // Hapus salinan setelah selesai
+  html2pdf().set(opt).from(wrapper).save().then(() => {
+    document.body.removeChild(wrapper); // Hapus setelah selesai
   });
 }
+
 
 
 
