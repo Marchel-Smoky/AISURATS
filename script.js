@@ -2,6 +2,7 @@ document.getElementById("jenisSurat").addEventListener("change", tampilkanInput)
 document.getElementById("formSurat").addEventListener("submit", handleSubmit);
 
 let currentId = 1;
+let maxId = 100; // Kamu bisa set otomatis dari backend jika mau
 
 function tampilkanInput() {
   const jenis = this.value;
@@ -12,7 +13,6 @@ function tampilkanInput() {
     container.innerHTML += `<label>${label}</label><input type="text" id="${id}" required />`;
   };
 
-  // Tambah input sesuai jenis
   if (jenis === "izin") {
     buatInput("Nama", "nama");
     buatInput("Tanggal", "tanggal");
@@ -84,7 +84,7 @@ async function handleSubmit(e) {
 }
 
 async function tampilkanSuratDenganId(id) {
-  const jenis = document.getElementById("jenisSurat").innerText;
+  const jenis = document.getElementById("jenisSurat").value;
   const inputs = document.querySelectorAll("#inputTambahan input");
   const data = {};
   inputs.forEach(input => data[input.id] = input.value);
@@ -109,7 +109,7 @@ function unduhPDF() {
   element.style.whiteSpace = "pre-wrap";
   element.innerText = isi;
 
-  document.body.appendChild(element); // ⬅️ Tambahkan sementara ke DOM
+  document.body.appendChild(element);
 
   const opt = {
     margin: 0.5,
@@ -120,16 +120,17 @@ function unduhPDF() {
   };
 
   html2pdf().set(opt).from(element).save().then(() => {
-    document.body.removeChild(element); // ⬅️ Hapus setelah PDF selesai
+    document.body.removeChild(element);
   });
 }
-
 
 function unduhWord() {
   const isi = document.getElementById("hasilSurat").innerText;
 
   const htmlContent = `
-    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+          xmlns:w='urn:schemas-microsoft-com:office:word' 
+          xmlns='http://www.w3.org/TR/REC-html40'>
     <head><meta charset='utf-8'><title>Surat</title></head>
     <body><pre style="font-family:Arial; font-size:14px;">${isi}</pre></body>
     </html>`;
@@ -146,14 +147,16 @@ function unduhWord() {
   document.body.removeChild(link);
 }
 
-document.getElementById("nextBtn").addEventListener("click", () => {
-  currentId++;
-  tampilkanSuratDenganId(currentId);
+document.getElementById("nextBtn").addEventListener("click", async () => {
+  if (currentId < maxId) {
+    currentId++;
+    await tampilkanSuratDenganId(currentId);
+  }
 });
 
-document.getElementById("prevBtn").addEventListener("click", () => {
+document.getElementById("prevBtn").addEventListener("click", async () => {
   if (currentId > 1) {
     currentId--;
-    tampilkanSuratDenganId(currentId);
+    await tampilkanSuratDenganId(currentId);
   }
 });
