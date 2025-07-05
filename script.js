@@ -100,51 +100,27 @@ async function tampilkanSuratDenganId(id) {
   }
 }
 
-function unduhPDF() {
-  const isi = document.getElementById("hasilSurat").innerHTML;
+async function unduhPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "a4"
+  });
 
-  const printWindow = window.open('', '_blank');
-  printWindow.document.open();
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>Surat</title>
-        <style>
-          @page {
-            size: A4 portrait;
-            margin: 2cm;
-          }
+  const isi = document.getElementById("hasilSurat").innerText;
 
-          body {
-            font-family: Arial, sans-serif;
-            color: #000;
-            white-space: pre-wrap;
-            margin: 0;
-            padding: 0;
-          }
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 20;
+  const maxLineWidth = pageWidth - margin * 2;
 
-          .content {
-            padding: 2cm;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="content">
-          ${isi}
-        </div>
+  const lines = doc.splitTextToSize(isi, maxLineWidth);
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(12);
+  doc.setTextColor(0, 0, 0);
+  doc.text(lines, margin, 30); // 30mm dari atas
 
-        <script>
-          window.onload = function () {
-            window.print();
-            window.onafterprint = function () {
-              window.close();
-            };
-          };
-        </script>
-      </body>
-    </html>
-  `);
-  printWindow.document.close();
+  doc.save("surat.pdf");
 }
 
 function unduhWord() {
