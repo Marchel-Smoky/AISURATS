@@ -15,15 +15,28 @@ body {
   margin: 0;
 }
 
-.container {
-  background: var(--card-bg);
-  max-width: 700px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  animation: fadeInUp 0.6s ease-out both;
+.logo-container {
+  text-align: center;
+  margin-bottom: 20px;
 }
+
+.logo {
+  max-width: 120px;
+  height: auto;
+  animation: popIn 0.5s ease-in-out;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 
 @keyframes fadeInUp {
   0% {
