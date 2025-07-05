@@ -1,5 +1,4 @@
 document.getElementById("jenisSurat").addEventListener("change", tampilkanInput);
-document.getElementById("formSurat").addEventListener("submit", buatSurat);
 
 function tampilkanInput() {
   const jenis = this.value;
