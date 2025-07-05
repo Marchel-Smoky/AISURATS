@@ -9,18 +9,19 @@
   <script src="/docx-exporter.js"></script>
   <script src="/script.js" defer></script>
   <style>
-    textarea#hasilSurat {
-      width: 100%;
-      min-height: 300px;
-      padding: 15px;
-      font-size: 1rem;
-      line-height: 1.6;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      resize: vertical;
-      margin-top: 1rem;
-      font-family: Arial, sans-serif;
-    }
+    #hasilSurat {
+        width: 100%;
+        min-height: 300px;
+        padding: 15px;
+        font-size: 1rem;
+        line-height: 1.6;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-top: 1rem;
+        font-family: Arial, sans-serif;
+        background: #fff;
+        white-space: pre-wrap;
+      }
   </style>
 </head>
 <body>
@@ -67,7 +68,7 @@
       <h2>📬 Hasil Surat</h2>
 
       <!-- Editable -->
-      <textarea id="hasilSurat" readonly></textarea> 
+     <div id="hasilSurat" contenteditable="true"></div> 
 
       <button onclick="unduhPDF()">📥 Unduh PDF</button>
       <button onclick="unduhWord()">📥 Unduh Word</button>
