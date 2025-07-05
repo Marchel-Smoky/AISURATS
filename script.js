@@ -173,4 +173,7 @@ function resetForm() {
   document.getElementById("hasilSurat").innerText = "";
   document.getElementById("cariBaruBtn").classList.add("hidden");
 }
+document.addEventListener("DOMContentLoaded", () => {
+  lucide.createIcons();
+});
 
