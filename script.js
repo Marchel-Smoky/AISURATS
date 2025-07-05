@@ -76,7 +76,7 @@ async function handleSubmit(e) {
   } else {
     // === MODE MANUAL - Ambil template dari backend dan isi otomatis ===
     try {
-      const res = await fetch(`http://localhost:3500/api/surat/${jenis}`);
+      const res = await fetch(`https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/surat/${jenis}`);
       const templates = await res.json();
       const templateAcak = templates[Math.floor(Math.random() * templates.length)].isi;
       const hasilIsi = templateAcak.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
