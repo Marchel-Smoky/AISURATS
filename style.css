@@ -25,7 +25,7 @@ body {
 }
 
 /* ===== CONTAINER ===== */
-.container, .contener {
+.container {
   background: #ffffff;
   max-width: 700px;
   margin: auto;
