@@ -114,3 +114,15 @@ function unduhWord() {
   link.download = "surat.doc";
   link.click();
 }
+document.getElementById("nextBtn").addEventListener("click", () => {
+  currentId++;
+  tampilkanSuratDenganId(currentId);
+});
+
+document.getElementById("prevBtn").addEventListener("click", () => {
+  if (currentId > 1) {
+    currentId--;
+    tampilkanSuratDenganId(currentId);
+  }
+});
+
