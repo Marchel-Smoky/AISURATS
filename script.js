@@ -101,32 +101,36 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const isiHTML = document.getElementById("hasilSurat").innerHTML;
+  const original = document.getElementById("hasilSurat");
 
-  // Bungkus dengan dokumen lengkap agar html2pdf bisa baca sempurna
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = `
-    <div style="padding: 20px; font-family: Arial; font-size: 14px; color: #000; background: #fff; white-space: pre-wrap;">
-      ${isiHTML}
-    </div>
-  `;
+  // Buat salinan isi dan tampilkan secara visual (diperlukan untuk html2canvas)
+  const clone = document.createElement("div");
+  clone.innerHTML = original.innerHTML;
+  clone.style.position = "fixed";
+  clone.style.top = "-9999px"; // Render di luar layar
+  clone.style.left = "0";
+  clone.style.width = "210mm"; // Lebar A4
+  clone.style.padding = "20px";
+  clone.style.fontFamily = "Arial";
+  clone.style.fontSize = "14px";
+  clone.style.lineHeight = "1.6";
+  clone.style.color = "#000";
+  clone.style.backgroundColor = "#fff";
+  clone.style.whiteSpace = "pre-wrap";
 
-  document.body.appendChild(wrapper); // Tambah ke DOM sementara
+  document.body.appendChild(clone);
 
   const opt = {
-    margin: 0.5,
+    margin: 0,
     filename: "surat.pdf",
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().set(opt).from(wrapper).save().then(() => {
-    document.body.removeChild(wrapper); // Hapus setelah selesai
+  html2pdf().set(opt).from(clone).save().then(() => {
+    document.body.removeChild(clone); // Bersihkan setelah selesai
   });
 }
-
-
-
 
 function unduhWord() {
   const isi = document.getElementById("hasilSurat").innerText;
