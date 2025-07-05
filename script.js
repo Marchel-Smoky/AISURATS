@@ -101,11 +101,20 @@ async function tampilkanSuratDenganId(id) {
 }
 
 function unduhPDF() {
-  const element = document.getElementById("hasilSurat");
+  const hasilDiv = document.getElementById("hasilSurat");
 
-  // Pastikan style teks
-  element.style.color = "#000";
-  element.style.backgroundColor = "#fff";
+  // Buat salinan isi sebagai elemen baru
+  const isiHTML = hasilDiv.innerHTML;
+  const clone = document.createElement("div");
+  clone.innerHTML = isiHTML;
+  clone.style.padding = "20px";
+  clone.style.fontFamily = "Arial";
+  clone.style.fontSize = "14px";
+  clone.style.color = "#000";
+  clone.style.backgroundColor = "#fff";
+  clone.style.whiteSpace = "pre-wrap";
+
+  document.body.appendChild(clone); // Masukkan sementara ke DOM
 
   const opt = {
     margin: 0.5,
@@ -114,9 +123,11 @@ function unduhPDF() {
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
-  // Jangan gunakan .image agar teks tetap text vector
-  html2pdf().set(opt).from(element).save();
+  html2pdf().set(opt).from(clone).save().then(() => {
+    document.body.removeChild(clone); // Hapus salinan setelah selesai
+  });
 }
+
 
 
 function unduhWord() {
