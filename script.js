@@ -76,15 +76,20 @@ async function handleSubmit(e) {
   } else {
     // === MODE MANUAL - Ambil template dari backend dan isi otomatis ===
     try {
-      const res = await fetch(`https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/surat/${jenis}`);
-      const templates = await res.json();
-      const templateAcak = templates[Math.floor(Math.random() * templates.length)].isi;
-      const hasilIsi = templateAcak.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
-      document.getElementById("hasilSurat").innerText = hasilIsi;
-    } catch (err) {
-      alert("Gagal mengambil template surat: " + err.message);
-    }
-  }
+        const res = await fetch(`https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/surat/${jenis}`);
+        const templates = await res.json();
+      
+        // Ambil ID 1 (pertama kali)
+        const templatePertama = templates.find(t => t.id === 1);
+      
+        // Isi placeholder
+        const hasilIsi = templatePertama?.isi.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "") || "Template surat tidak ditemukan.";
+        
+        document.getElementById("hasilSurat").innerText = hasilIsi;
+      } catch (err) {
+        alert("Gagal mengambil template surat: " + err.message);
+      }
+
 
   document.getElementById("hasilContainer").classList.remove("hidden");
   document.getElementById("loading").classList.add("hidden");
