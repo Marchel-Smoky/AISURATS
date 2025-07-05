@@ -103,16 +103,21 @@ async function tampilkanSuratDenganId(id) {
 function unduhPDF() {
   const element = document.getElementById("hasilSurat");
 
+  // Pastikan style teks
+  element.style.color = "#000";
+  element.style.backgroundColor = "#fff";
+
   const opt = {
     margin: 0.5,
     filename: "surat.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
+    html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
   };
 
+  // Jangan gunakan .image agar teks tetap text vector
   html2pdf().set(opt).from(element).save();
 }
+
 
 function unduhWord() {
   const isi = document.getElementById("hasilSurat").innerText;
