@@ -84,7 +84,7 @@ async function handleSubmit(e) {
 }
 
 async function tampilkanSuratDenganId(id) {
-  const jenis = document.getElementById("jenisSurat").value;
+  const jenis = document.getElementById("jenisSurat").innerText;
   const inputs = document.querySelectorAll("#inputTambahan input");
   const data = {};
   inputs.forEach(input => data[input.id] = input.value);
@@ -94,14 +94,14 @@ async function tampilkanSuratDenganId(id) {
     const template = await res.json();
 
     const hasilIsi = template.isi.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
-    document.getElementById("hasilSurat").value = hasilIsi;
+    document.getElementById("hasilSurat").innerText = hasilIsi;
   } catch (err) {
-    document.getElementById("hasilSurat").value = `❌ Gagal menampilkan surat ke-${id}`;
+    document.getElementById("hasilSurat").innerText = `❌ Gagal menampilkan surat ke-${id}`;
   }
 }
 
 function unduhPDF() {
-  const isi = document.getElementById("hasilSurat").value;
+  const isi = document.getElementById("hasilSurat").innerText;
 
   const element = document.createElement("div");
   element.style.padding = "20px";
@@ -126,7 +126,7 @@ function unduhPDF() {
 
 
 function unduhWord() {
-  const isi = document.getElementById("hasilSurat").value;
+  const isi = document.getElementById("hasilSurat").innerText;
 
   const htmlContent = `
     <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
