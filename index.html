@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AI Pembuat Surat Otomatis</title>
   <link rel="stylesheet" href="/style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="/docx-exporter.js"></script>
   <script src="/script.js" defer></script>
@@ -54,9 +55,18 @@
       <!-- Editable -->
     <div id="hasilSurat" contenteditable="true" class="hasil-surat"></div>
 
-      <button onclick="unduhPDF()">📥 Unduh PDF</button>
-      <button onclick="unduhWord()">📥 Unduh Word</button>
-      <button id="cariBaruBtn" class="hidden" onclick="resetForm()">🔄 Cari Surat Baru</button>
+      <button onclick="unduhPDF()">
+        <i data-lucide="file-text"></i> Unduh PDF
+      </button>
+
+    <button onclick="unduhWord()">
+      <i data-lucide="file-word"></i> Unduh Word
+    </button>
+
+    <button id="cariBaruBtn" class="hidden" onclick="resetForm()">
+      <i data-lucide="rotate-ccw"></i> Cari Surat Baru
+    </button>
+
     </div>
   </div>
 </body>
