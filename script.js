@@ -1,6 +1,8 @@
 document.getElementById("jenisSurat").addEventListener("change", tampilkanInput);
 document.getElementById("formSurat").addEventListener("submit", handleSubmit);
 
+let currentId = 1;
+
 function tampilkanInput() {
   const jenis = this.value;
   const container = document.getElementById("inputTambahan");
@@ -10,7 +12,7 @@ function tampilkanInput() {
     container.innerHTML += `<label>${label}</label><input type="text" id="${id}" required />`;
   };
 
-  // === Tambahkan input sesuai jenis surat ===
+  // Tambah input sesuai jenis
   if (jenis === "izin") {
     buatInput("Nama", "nama");
     buatInput("Tanggal", "tanggal");
@@ -48,6 +50,7 @@ function tampilkanInput() {
 
 async function handleSubmit(e) {
   e.preventDefault();
+
   const mode = document.getElementById("modeSurat").value;
   const jenis = document.getElementById("jenisSurat").value;
   const kualitas = document.getElementById("kualitas").value;
@@ -60,39 +63,41 @@ async function handleSubmit(e) {
   document.getElementById("hasilContainer").classList.add("hidden");
 
   if (mode === "ai") {
-    // === MODE AI ===
     try {
       const res = await fetch("https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ jenisSurat: jenis, kualitas, data })
       });
-
       const result = await res.json();
       document.getElementById("hasilSurat").innerText = result.hasil;
     } catch (err) {
       alert("Gagal membuat surat dari AI: " + err.message);
     }
   } else {
-    // === MODE MANUAL - Ambil template dari backend dan isi otomatis ===
-    try {
-        const res = await fetch(`https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/surat/${jenis}`);
-        const templates = await res.json();
-      
-        // Ambil ID 1 (pertama kali)
-        const templatePertama = templates.find(t => t.id === 1);
-      
-        // Isi placeholder
-        const hasilIsi = templatePertama?.isi.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "") || "Template surat tidak ditemukan.";
-        
-        document.getElementById("hasilSurat").innerText = hasilIsi;
-      } catch (err) {
-        alert("Gagal mengambil template surat: " + err.message);
-      }
-
+    currentId = 1;
+    await tampilkanSuratDenganId(currentId);
+  }
 
   document.getElementById("hasilContainer").classList.remove("hidden");
   document.getElementById("loading").classList.add("hidden");
+}
+
+async function tampilkanSuratDenganId(id) {
+  const jenis = document.getElementById("jenisSurat").value;
+  const inputs = document.querySelectorAll("#inputTambahan input");
+  const data = {};
+  inputs.forEach(input => data[input.id] = input.value);
+
+  try {
+    const res = await fetch(`https://40f62a4e-4490-420e-8813-9b7ce2d05c27-00-cbimdo4z3w8w.sisko.replit.dev/api/surat/${jenis}/${id}`);
+    const template = await res.json();
+
+    const hasilIsi = template.isi.replace(/{{(.*?)}}/g, (_, key) => data[key.trim()] || "");
+    document.getElementById("hasilSurat").innerText = hasilIsi;
+  } catch (err) {
+    document.getElementById("hasilSurat").innerText = `❌ Gagal menampilkan surat ke-${id}`;
+  }
 }
 
 function unduhPDF() {
@@ -119,6 +124,7 @@ function unduhWord() {
   link.download = "surat.doc";
   link.click();
 }
+
 document.getElementById("nextBtn").addEventListener("click", () => {
   currentId++;
   tampilkanSuratDenganId(currentId);
@@ -130,4 +136,3 @@ document.getElementById("prevBtn").addEventListener("click", () => {
     tampilkanSuratDenganId(currentId);
   }
 });
-
