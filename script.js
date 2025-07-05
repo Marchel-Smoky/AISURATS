@@ -110,16 +110,29 @@ function unduhPDF() {
       <head>
         <title>Surat</title>
         <style>
+          @page {
+            size: A4 portrait;
+            margin: 2cm;
+          }
+
           body {
             font-family: Arial, sans-serif;
-            padding: 40px;
             color: #000;
             white-space: pre-wrap;
+            margin: 0;
+            padding: 0;
+          }
+
+          .content {
+            padding: 2cm;
           }
         </style>
       </head>
       <body>
-        ${isi}
+        <div class="content">
+          ${isi}
+        </div>
+
         <script>
           window.onload = function () {
             window.print();
