@@ -10,23 +10,21 @@
 <body>
   <div class="container">
     <h1>📄 AI Pembuat Surat Otomatis</h1>
+
     <form id="formSurat">
-      
       <label for="modeSurat">Mode Pembuatan Surat:</label>
       <select id="modeSurat" required>
-              <option value="manual">Manual (Tanpa AI)</option>
-              <option value="ai">AI Otomatis</option>
+        <option value="manual">Manual (Tanpa AI)</option>
+        <option value="ai">AI Otomatis</option>
       </select>
 
-      
       <label for="kualitas">Kualitas Surat:</label>
       <select id="kualitas" required>
-              <option value="standar">Standar</option>
-              <option value="menengah">Menengah</option>
-              <option value="pro">Profesional</option>
+        <option value="standar">Standar</option>
+        <option value="menengah">Menengah</option>
+        <option value="pro">Profesional</option>
       </select>
 
-      
       <label for="jenisSurat">Jenis Surat:</label>
       <select id="jenisSurat" required>
         <option value="">-- Pilih Jenis Surat --</option>
@@ -45,17 +43,16 @@
     <div id="loading" class="hidden">⏳ Membuat surat...</div>
 
     <div id="hasilContainer" class="hidden">
-      
       <div style="margin-top: 1rem;">
-        
-          <button id="prevBtn">⬅️ Sebelumnya</button>
-          <button id="nextBtn">➡️ Berikutnya</button>
-    </div>
-
-<div id="hasilSurat" style="white-space: pre-wrap; margin-top: 1rem;"></div>
+        <button id="prevBtn">⬅️ Sebelumnya</button>
+        <button id="nextBtn">➡️ Berikutnya</button>
+      </div>
 
       <h2>📬 Hasil Surat</h2>
-      <div id="hasilSurat"></div>
+
+      <!-- Textarea Editable -->
+      <textarea id="hasilSurat" style="width: 100%; height: 400px; margin-top: 1rem;"></textarea>
+
       <button onclick="unduhPDF()">📥 Unduh PDF</button>
       <button onclick="unduhWord()">📥 Unduh Word</button>
     </div>
