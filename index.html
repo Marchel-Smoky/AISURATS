@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Pembuat Surat Otomatis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📄 AI Pembuat Surat Otomatis</h1>
+    <form id="formSurat">
+      <label for="jenisSurat">Jenis Surat:</label>
+      <select id="jenisSurat" required>
+        <option value="">-- Pilih Jenis Surat --</option>
+        <option value="izin">Izin Tidak Masuk</option>
+        <option value="lamaran">Lamaran Kerja</option>
+        <option value="pengunduran">Pengunduran Diri</option>
+        <option value="penghasilan">Keterangan Penghasilan</option>
+        <option value="beasiswa">Permohonan Beasiswa</option>
+      </select>
+
+      <div id="inputTambahan"></div>
+
+      <button type="submit">Buat Surat</button>
+    </form>
+
+    <div id="loading" class="hidden">⏳ Membuat surat...</div>
+
+    <div id="hasilContainer" class="hidden">
+      <h2>📬 Hasil Surat</h2>
+      <div id="hasilSurat"></div>
+      <button onclick="unduhPDF()">📥 Unduh PDF</button>
+      <button onclick="unduhWord()">📥 Unduh Word</button>
+    </div>
+  </div>
+
+  <script src="html2pdf.bundle.min.js"></script>
+  <script src="docx-exporter.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
