@@ -9,27 +9,40 @@ function tampilkanInput() {
     container.innerHTML += `<label>${label}</label><input type="text" id="${id}" required />`;
   };
 
-  if (jenis === "izin") {
-    buatInput("Nama", "nama");
-    buatInput("Tanggal", "tanggal");
-    buatInput("Alasan", "alasan");
-  } else if (jenis === "lamaran") {
-    buatInput("Nama", "nama");
-    buatInput("Posisi", "posisi");
-    buatInput("Perusahaan", "perusahaan");
-  } else if (jenis === "pengunduran") {
-    buatInput("Nama", "nama");
-    buatInput("Jabatan", "jabatan");
-    buatInput("Tanggal Pengunduran", "tanggal");
-  } else if (jenis === "penghasilan") {
-    buatInput("Nama", "nama");
-    buatInput("Pekerjaan", "pekerjaan");
-    buatInput("Penghasilan per Bulan", "penghasilan");
-  } else if (jenis === "beasiswa") {
-    buatInput("Nama", "nama");
-    buatInput("Kelas", "kelas");
-    buatInput("Prestasi", "prestasi");
-  }
+          if (jenis === "izin") {
+          buatInput("Nama", "nama");
+          buatInput("Tanggal", "tanggal");
+          buatInput("Alasan", "alasan");
+          buatInput("Ditujukan Kepada", "kepada");
+          buatInput("Instansi / Sekolah / Perusahaan", "instansi");
+        } else if (jenis === "lamaran") {
+          buatInput("Nama Lengkap", "nama");
+          buatInput("Posisi yang Dilamar", "posisi");
+          buatInput("Nama Perusahaan", "perusahaan");
+          buatInput("Pendidikan Terakhir", "pendidikan");
+          buatInput("Alamat Email", "email");
+          buatInput("Nomor Telepon", "telepon");
+        } else if (jenis === "pengunduran") {
+          buatInput("Nama", "nama");
+          buatInput("Jabatan Saat Ini", "jabatan");
+          buatInput("Tanggal Pengunduran Diri", "tanggal");
+          buatInput("Nama Atasan / HRD", "kepada");
+          buatInput("Alasan Pengunduran Diri", "alasan");
+        } else if (jenis === "penghasilan") {
+          buatInput("Nama", "nama");
+          buatInput("Pekerjaan", "pekerjaan");
+          buatInput("Penghasilan per Bulan", "penghasilan");
+          buatInput("Alamat Tempat Tinggal", "alamat");
+          buatInput("Ditujukan Kepada", "kepada");
+        } else if (jenis === "beasiswa") {
+          buatInput("Nama", "nama");
+          buatInput("Kelas / Semester", "kelas");
+          buatInput("Nama Sekolah / Kampus", "instansi");
+          buatInput("Prestasi yang Pernah Diraih", "prestasi");
+          buatInput("Alasan Mengajukan Beasiswa", "alasan");
+          buatInput("Ditujukan Kepada", "kepada");
+        }
+
 }
 
 document.getElementById("formSurat").addEventListener("submit", async function (e) {
