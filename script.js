@@ -59,8 +59,8 @@ async function handleSubmit(e) {
   const data = {};
   inputs.forEach(input => data[input.id] = input.value);
 
-  document.getElementById("hasilContainer").classList.remove("hidden");
-  document.getElementById("loading").classList.add("hidden");
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById("hasilContainer").classList.add("hidden");
 
   if (mode === "ai") {
     document.getElementById("cariBaruBtn").classList.remove("hidden");
