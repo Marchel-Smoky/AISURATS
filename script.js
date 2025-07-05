@@ -13,7 +13,7 @@ function tampilkanInput() {
           buatInput("Nama", "nama");
           buatInput("Tanggal", "tanggal");
           buatInput("Alasan", "alasan");
-          buatInput("Ditujukan Kepada (HRD, Guru, Dll""), "kepada");
+          buatInput("Ditujukan Kepada (HRD, Guru, Dll)", "kepada");
           buatInput("Nama (Instansi, Sekolah, Perusahaan)", "instansi");
         } else if (jenis === "lamaran") {
           buatInput("Nama Lengkap", "nama");
