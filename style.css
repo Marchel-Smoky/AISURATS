@@ -68,16 +68,20 @@ button:hover {
 
 #hasilSurat {
   width: 100%;
-  height: 400px;
-  padding: 20px;
-  background: #fdfdfd;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 15px;
+  min-height: 300px;
+  max-height: 500px; /* Atur sesuai kebutuhan */
+  padding: 15px;
+  font-size: 1rem;
   line-height: 1.6;
-  resize: vertical;
-  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  white-space: pre-wrap;
+  overflow-y: auto; /* Ini yang bikin bisa scroll */
 }
+
 
 #hasilContainer h2 {
   margin-top: 20px;
