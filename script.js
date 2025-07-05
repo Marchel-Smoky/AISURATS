@@ -124,5 +124,38 @@ document.getElementById("formSurat").addEventListener("submit", async function (
       alert("Gagal membuat surat dari AI: " + err.message);
     }
     
-}});
+}
+
+      function unduhPDF() {
+        const element = document.getElementById("hasilSurat");
+        const opt = {
+          margin:       0.5,
+          filename:     "surat.pdf",
+          image:        { type: "jpeg", quality: 0.98 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: "in", format: "a4", orientation: "portrait" }
+        };
+      
+        html2pdf().set(opt).from(element).save();
+      }
+      
+      function unduhWord() {
+        const isiSurat = document.getElementById("hasilSurat").innerText;
+      
+        const blob = new Blob(
+          [
+            `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Surat</title></head><body><pre>${isiSurat}</pre></body></html>`
+          ],
+          {
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          }
+        );
+      
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "surat.doc";
+        link.click();
+      }
+
+});
 
